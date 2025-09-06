@@ -64,6 +64,7 @@ jobs:
         name: Deploy Infrastructure to AWS
         permissions:
             contents: read
+            id-token: write
         needs: [lint, infracost]
         steps:
             - name: Checkout Repository
