@@ -1,0 +1,97 @@
+name: AWS Infrastructure Deployment for equiCast
+
+on:
+    push:
+        branches:
+            - "**"
+    pull_request:
+        branches:
+            - "**"
+    workflow_dispatch:
+
+jobs:
+    lint:
+        if: github.event_name == 'push'
+        runs-on: ubuntu-latest
+        name: Lint and Validate Terraform
+        permissions:
+            contents: read
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+            
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                terraform_version: 1.7.0
+            
+            - name: Terraform Format Check
+              run: terraform fmt -check
+            
+            - name: Terraform Validate
+              run: terraform validate -json
+
+    infracost:
+        runs-on: ubuntu-latest
+        name: Infracost Breakdown
+        permissions:
+            contents: read
+            pull-requests: write
+        needs: lint
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+            
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                terraform_version: 1.7.0
+
+            - name: Terraform Init
+              run: terraform init -input=false
+
+            - name: Setup Infracost
+              uses: infracost/actions/setup@v3
+              with:
+                api-key: ${{ secrets.INFRACOST_API_KEY }}
+            
+            - name: Infracost Breakdown
+              run: infracost breakdown --path . --format table --project-name "equiCast"
+    
+    deploy:
+        if: github.ref == 'refs/heads/main'
+        runs-on: ubuntu-latest
+        name: Deploy Infrastructure to AWS
+        permissions:
+            contents: read
+        needs: [lint, infracost]
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+                aws-region: eu-west-1
+                role-session-name: GitHubActionsSession
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                terraform_version: 1.7.0
+
+            - name: Terraform Init
+              run: terraform init -input=false
+
+            - name: Terraform Plan
+              run: terraform plan -out=tfplan -input=false
+
+            - name: Upload Terraform Plan
+              uses: actions/upload-artifact@v4
+              with:
+                name: tfplan
+                path: tfplan
+            
+            - name: Terraform Apply
+              run: terraform apply -auto-approve tfplan
