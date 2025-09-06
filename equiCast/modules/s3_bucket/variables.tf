@@ -3,12 +3,6 @@ variable "bucket_name" {
   type        = string
 }
 
-variable "bucket_prefix" {
-  description = "Prefix to add to the S3 bucket name"
-  type        = string
-  default     = "equicast-"
-}
-
 variable "region" {
   description = "AWS region code"
   type        = string
