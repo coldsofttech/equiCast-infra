@@ -8,8 +8,7 @@ resource "aws_s3_bucket" "this" {
       application = "equiCast"
     }
   )
-  region        = var.region
-  bucket_prefix = var.bucket_prefix
+  region = var.region
 }
 
 resource "aws_s3_bucket_versioning" "this" {
