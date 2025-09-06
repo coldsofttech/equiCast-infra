@@ -47,13 +47,6 @@ jobs:
             
             - name: Infracost Breakdown
               run: infracost breakdown --path . --format table
-
-            - name: Infracost Comment PR
-              if: github.event_name == 'pull_request'
-              uses: infracost/infracost-gh-action@v1
-              with:
-                path: .
-                github_token: ${{ secrets.GITHUB_TOKEN }}
     
     deploy:
         if: github.ref == 'refs/heads/main'
