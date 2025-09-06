@@ -12,6 +12,9 @@ on:
 jobs:
     lint:
         runs-on: ubuntu-latest
+        name: Lint and Validate Terraform
+        permissions:
+            contents: read
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
@@ -28,7 +31,12 @@ jobs:
               run: terraform validate -json
 
     infracost:
+        if: github.event_name == 'pull_request'
         runs-on: ubuntu-latest
+        name: Infracost Breakdown
+        permissions:
+            contents: read
+            pull-requests: write
         needs: lint
         steps:
             - name: Checkout Repository
@@ -42,8 +50,10 @@ jobs:
             - name: Terraform Init
               run: terraform init -input=false
 
-            - name: Install Infracost
-              run: curl -s https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+            - name: Setup Infracost
+              uses: infracost/actions/setup@v3
+              with:
+                api-key: ${{ secrets.INFRACOST_API_KEY }}
             
             - name: Infracost Breakdown
               run: infracost breakdown --path . --format table
@@ -51,6 +61,9 @@ jobs:
     deploy:
         if: github.ref == 'refs/heads/main'
         runs-on: ubuntu-latest
+        name: Deploy Infrastructure to AWS
+        permissions:
+            contents: read
         needs: [lint, infracost]
         steps:
             - name: Checkout Repository
