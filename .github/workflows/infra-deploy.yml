@@ -63,7 +63,7 @@ jobs:
                 api-key: ${{ secrets.INFRACOST_API_KEY }}
             
             - name: Infracost Breakdown
-              run: infracost breakdown --path equiCast --format table --project-name "equiCast"
+              run: infracost breakdown --path equiCast --format table --project-name "equiCast" --show-skipped
     
     deploy:
         if: github.ref == 'refs/heads/main'
