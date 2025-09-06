@@ -43,7 +43,7 @@ echo ===========================================================
 echo Running Infracost Breakdown...
 echo ===========================================================
 
-infracost breakdown --path . --format table --project-name "equiCast"
+infracost breakdown --path . --format table --project-name "equiCast" --show-skipped
 if %errorlevel% neq 0 (
     echo "Infracost breakdown failed."
     exit /b %errorlevel%
