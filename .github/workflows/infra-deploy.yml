@@ -28,6 +28,10 @@ jobs:
             - name: Terraform Format
               run: terraform fmt -recursive
               working-directory: equiCast
+
+            - name: Terraform Init
+              run: terraform init -input=false
+              working-directory: equiCast
             
             - name: Terraform Validate
               run: terraform validate -json
