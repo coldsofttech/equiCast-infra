@@ -30,7 +30,7 @@ jobs:
               working-directory: equiCast
 
             - name: Terraform Init
-              run: terraform init -input=false
+              run: terraform init -backend=false -input=false
               working-directory: equiCast
             
             - name: Terraform Validate
@@ -54,7 +54,7 @@ jobs:
                 terraform_version: 1.7.0
 
             - name: Terraform Init
-              run: terraform init -input=false
+              run: terraform init -backend=false -input=false
               working-directory: equiCast
 
             - name: Setup Infracost
