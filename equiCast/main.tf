@@ -22,3 +22,11 @@ module "ingestion_bucket" {
   bucket_name = "equicast-ingestion"
   region      = "eu-west-1"
 }
+
+# CodeArtifact for storing pyutils package
+module "pyutils_codeartifact" {
+  source      = "./modules/codeartifact"
+  domain_name = "equicast-pyutils-domain"
+  repo_name   = "equicast-pyutils-repo"
+  region      = "eu-west-1"
+}
