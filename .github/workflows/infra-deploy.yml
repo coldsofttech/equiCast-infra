@@ -27,9 +27,11 @@ jobs:
             
             - name: Terraform Format Check
               run: terraform fmt -check
+              working-directory: equiCast
             
             - name: Terraform Validate
               run: terraform validate -json
+              working-directory: equiCast
 
     infracost:
         runs-on: ubuntu-latest
@@ -49,6 +51,7 @@ jobs:
 
             - name: Terraform Init
               run: terraform init -input=false
+              working-directory: equiCast
 
             - name: Setup Infracost
               uses: infracost/actions/setup@v3
@@ -56,7 +59,7 @@ jobs:
                 api-key: ${{ secrets.INFRACOST_API_KEY }}
             
             - name: Infracost Breakdown
-              run: infracost breakdown --path . --format table --project-name "equiCast"
+              run: infracost breakdown --path equiCast --format table --project-name "equiCast"
     
     deploy:
         if: github.ref == 'refs/heads/main'
@@ -84,15 +87,18 @@ jobs:
 
             - name: Terraform Init
               run: terraform init -input=false
+              working-directory: equiCast
 
             - name: Terraform Plan
               run: terraform plan -out=tfplan -input=false
+              working-directory: equiCast
 
             - name: Upload Terraform Plan
               uses: actions/upload-artifact@v4
               with:
                 name: tfplan
-                path: tfplan
+                path: equiCast/tfplan
             
             - name: Terraform Apply
               run: terraform apply -auto-approve tfplan
+              working-directory: equiCast
