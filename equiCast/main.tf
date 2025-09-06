@@ -5,6 +5,6 @@ provider "aws" {
 # S3 bucket for storing ticker data (tickers.json and ticker_status.json)
 module "tickers_bucket" {
   source      = "./modules/s3_bucket"
-  bucket_name = "tickers"
+  bucket_name = "equicast-tickers"
   region      = "eu-west-1"
 }
