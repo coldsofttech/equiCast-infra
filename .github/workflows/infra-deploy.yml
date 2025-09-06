@@ -32,7 +32,6 @@ jobs:
               run: terraform validate -json
 
     infracost:
-        if: github.event_name == 'pull_request'
         runs-on: ubuntu-latest
         name: Infracost Breakdown
         permissions:
