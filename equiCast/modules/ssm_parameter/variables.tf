@@ -18,7 +18,6 @@ variable "type" {
 variable "value" {
   description = "The value of the parameter"
   type        = string
-  default     = null
 }
 
 variable "description" {

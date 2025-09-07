@@ -2,7 +2,7 @@ resource "aws_ssm_parameter" "this" {
   name        = var.name
   region      = var.region
   type        = var.type
-  value       = var.value != null ? var.value : ""
+  value       = var.value
   description = var.description
   tier        = var.tier
   key_id      = var.key_id
