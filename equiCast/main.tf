@@ -36,4 +36,5 @@ module "pyutils_version_ssm_parameter" {
   source = "./modules/ssm_parameter"
   name   = "/equicast/pyutils/version"
   region = "eu-west-1"
+  value  = "0.0.0"
 }
