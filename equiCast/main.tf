@@ -30,3 +30,10 @@ module "pyutils_codeartifact" {
   repo_name   = "equicast-pyutils-repo"
   region      = "eu-west-1"
 }
+
+# SSM Parameter for storing Python Utils Latest Version
+module "pyutils_version_ssm_parameter" {
+  source = "./modules/ssm_parameter"
+  name   = "/equicast/pyutils/version"
+  region = "eu-west-1"
+}
