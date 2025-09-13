@@ -45,3 +45,11 @@ module "pyutils_version_ssm_parameter" {
   region = var.region
   value  = var.pyutils_version_ssm_parameter_value
 }
+
+# SSM Parameter for storing AWS Reusable Components Latest Version
+module "awsutils_version_ssm_parameter" {
+  source = "./modules/ssm/parameter"
+  name   = var.awsutils_version_ssm_parameter_name
+  region = var.region
+  value  = var.awsutils_version_ssm_parameter_value
+}
