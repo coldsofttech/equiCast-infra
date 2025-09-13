@@ -9,6 +9,13 @@ resource "aws_s3_bucket" "this" {
     }
   )
   region = var.region
+
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [
+      tags,
+    ]
+  }
 }
 
 resource "aws_s3_bucket_versioning" "this" {
