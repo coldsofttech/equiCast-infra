@@ -11,4 +11,9 @@ resource "aws_codeartifact_repository" "this" {
       application = "equiCast"
     }
   )
+
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [tags]
+  }
 }
