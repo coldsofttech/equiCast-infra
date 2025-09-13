@@ -82,6 +82,8 @@ jobs:
           PYUTILS_CODEARTIFACT_NAME: equicast-pyutils-repo
           PYUTILS_VERSION_SSM_PARAMETER_NAME: /equicast/pyutils/version
           PYUTILS_VERSION_SSM_PARAMETER_VALUE: v0.0.0
+          AWSUTILS_VERSION_SSM_PARAMETER_NAME: /equicast/awsutils/version
+          AWSUTILS_VERSION_SSM_PARAMETER_VALUE: v0.0.0
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
@@ -113,6 +115,8 @@ jobs:
                   -var="pyutils_codeartifact_name=$PYUTILS_CODEARTIFACT_NAME" \
                   -var="pyutils_version_ssm_parameter_name=$PYUTILS_VERSION_SSM_PARAMETER_NAME" \
                   -var="pyutils_version_ssm_parameter_value=$PYUTILS_VERSION_SSM_PARAMETER_VALUE" \
+                  -var="awsutils_version_ssm_parameter_name=$AWSUTILS_VERSION_SSM_PARAMETER_NAME" \
+                  -var="awsutils_version_ssm_parameter_value=$AWSUTILS_VERSION_SSM_PARAMETER_VALUE" \
                   -input=false
               working-directory: equiCast
 
