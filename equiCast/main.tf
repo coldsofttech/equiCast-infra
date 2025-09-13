@@ -38,6 +38,14 @@ module "pyutils_codeartifact" {
   region    = var.region
 }
 
+# CodeArtifact for storing awsutils package
+module "awsutils_codeartifact" {
+  source    = "./modules/codeartifact/repository"
+  repo_name = var.awsutils_codeartifact_name
+  domain    = module.codeartifact_domain.artifactory_domain_name
+  region    = var.region
+}
+
 # SSM Parameter for storing Python Utils Latest Version
 module "pyutils_version_ssm_parameter" {
   source = "./modules/ssm/parameter"
