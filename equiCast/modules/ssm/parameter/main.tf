@@ -5,7 +5,7 @@ resource "aws_ssm_parameter" "this" {
   value       = var.value
   description = var.description
   tier        = var.tier
-  key_id      = var.key_id
+  key_id      = var.type == "SecureString" ? var.key_id : null
   tags = merge(
     var.tags,
     {

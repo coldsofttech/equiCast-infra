@@ -1,15 +1,20 @@
-variable "domain_name" {
+variable "repo_name" {
+  description = "The name of the CodeArtifact repository."
+  type        = string
+
+  validation {
+    condition     = length(var.repo_name) >= 2 && length(var.repo_name) <= 100
+    error_message = "The CodeArtifact repository name must be between 2 and 100 characters."
+  }
+}
+
+variable "domain" {
   description = "The name of the CodeArtifact domain."
   type        = string
 }
 
-variable "repo_name" {
-  description = "The name of the CodeArtifact repository."
-  type        = string
-}
-
 variable "region" {
-  description = "AWS region code"
+  description = "The AWS region"
   type        = string
   default     = "eu-west-1"
 }
@@ -21,7 +26,7 @@ variable "description" {
 }
 
 variable "environment" {
-  description = "Value for the environment tag"
+  description = "The value for the 'environment' tag"
   type        = string
   default     = "production"
 }
