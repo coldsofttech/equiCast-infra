@@ -17,7 +17,7 @@ resource "aws_ssm_parameter" "this" {
 
   lifecycle {
     ignore_changes = [
-      value, # Ignore changes to the value
+      value,  # Ignore changes to the value
     ]
   }
 }
