@@ -39,3 +39,14 @@ variable "pyutils_version_ssm_parameter_value" {
   type        = string
   default     = "v0.0.0"
 }
+
+variable "awsutils_version_ssm_parameter_name" {
+  description = "The SSM parameter to store version of AWS Utils"
+  type        = string
+}
+
+variable "awsutils_version_ssm_parameter_value" {
+  description = "The value for the AWS Utils Version SSM parameter"
+  type        = string
+  default     = "v0.0.0"
+}
