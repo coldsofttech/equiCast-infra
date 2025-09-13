@@ -14,4 +14,10 @@ resource "aws_ssm_parameter" "this" {
       application = "equiCast"
     }
   )
+
+  lifecycle {
+    ignore_changes = [
+      value, # Ignore changes to the value
+    ]
+  }
 }
