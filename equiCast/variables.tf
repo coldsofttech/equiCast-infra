@@ -29,6 +29,11 @@ variable "pyutils_codeartifact_name" {
   type        = string
 }
 
+variable "awsutils_codeartifact_name" {
+  description = "The name for the AWS Utils CodeArtifact repository"
+  type        = string
+}
+
 variable "pyutils_version_ssm_parameter_name" {
   description = "The SSM parameter to store version of Python Utils"
   type        = string
