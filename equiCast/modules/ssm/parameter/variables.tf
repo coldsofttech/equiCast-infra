@@ -4,7 +4,7 @@ variable "name" {
 }
 
 variable "region" {
-  description = "AWS region code"
+  description = "The AWS region"
   type        = string
   default     = "eu-west-1"
 }
@@ -13,6 +13,11 @@ variable "type" {
   description = "The type of the parameter. Valid types: String, StringList, SecureString"
   type        = string
   default     = "String"
+
+  validation {
+    condition     = contains(["String", "StringList", "SecureString"], var.type)
+    error_message = "The SSM Parameter type must be one of: String, StringList, SecureString."
+  }
 }
 
 variable "value" {
@@ -30,6 +35,11 @@ variable "tier" {
   description = "The tier for the parameter: Standard or Advanced"
   type        = string
   default     = "Standard"
+
+  validation {
+    condition     = contains(["Standard", "Advanced"], var.tier)
+    error_message = "Tier must be Standard or Advanced."
+  }
 }
 
 variable "key_id" {
@@ -39,7 +49,7 @@ variable "key_id" {
 }
 
 variable "environment" {
-  description = "Value for the environment tag"
+  description = "The value for the 'environment' tag"
   type        = string
   default     = "production"
 }
